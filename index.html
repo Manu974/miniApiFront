@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Mini Api</title>
+    </head>
+
+    <body>
+    <a href="creationUser.html"><button>Créer un Utilisateur</button></a> 
+    <button id="buttonList">liste des Utilisateurs</button>
+    <ul id="listUser">
+      
+    </ul>
+
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+     <script>
+      $(function() {
+
+        $(window).on('load', function(){
+
+          $.ajax({
+            url:'http://127.0.0.1:8000/lists/users', 
+            type : 'GET',
+            timeout : 3000,
+            success: function(data){
+              
+              $.each(data,function(i,user){
+                var idUser= String(user.id);
+                //console.log(user);
+                var liUser = '<li id='+idUser+'> name : '+user.name +' email: '+user.email+'<a> <button id='+idUser+'>Supprimer cet utilisateur</button></a></li>';
+                
+                $('#listUser').append(liUser);    
+
+            });
+              
+            },
+            error: function(){
+              alert('La requête n\'a pas abouti');
+            }
+          });   
+
+
+        });
+
+       $('ul').on("click", 'button', function(){
+        
+                  $.ajax({
+                        url:'http://127.0.0.1:8000/users/'+this.id, 
+                        type : 'DELETE',
+                        timeout : 3000,
+                        success: function(data){
+                          alert('utilisateur supprimé');
+                          location.reload(true);
+                        },
+                        error: function(){
+                          alert('La requête n\'a pas abouti');
+                        }
+                  });  
+
+       });
+
+       $('ul').on("click", 'li', function(){
+          
+                  $.ajax({
+                        url:'http://127.0.0.1:8000/lists/tasks/'+this.id, 
+                        type : 'GET',
+                        timeout : 3000,
+                        success: function(data){
+                          console.log(data);
+
+                          $.each(data,function(i,task){
+                      var idTask= String(task.id);
+                  
+                         var liTask = '<li id='+idTask+'> title : '+task.title +' description: '+task.description+' Date de création : '+task.creation_date+' status : '+task.status+'<a> <button id='+idTask+'>Supprimer cet utilisateur</button></a></li>';
+                console.log(liTask);
+                    $(this).append(liTask); 
+
+            });
+
+                          
+                        },
+                        error: function(){
+                          alert('La requête n\'a pas abouti');
+                        }
+                  });  
+
+       });
+
+
+       
+
+         
+
+
+
+        
+      });
+      </script>
+    </body>
+</html>
