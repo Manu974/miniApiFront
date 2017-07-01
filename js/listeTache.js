@@ -6,7 +6,7 @@ $('ul').on("click", 'button[name="listerTache"]', function(e){
   $(this).after(fermerListe);
 
   $.ajax({
-    url:'http://127.0.0.1:8000/api/lists/tasks/'+this.id, 
+    url:'http://test1.developpeurfbs.com/api/lists/tasks/'+this.id, 
     type : 'GET',
     timeout : 3000,
     success: function(data){

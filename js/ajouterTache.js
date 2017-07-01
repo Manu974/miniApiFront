@@ -23,7 +23,7 @@ $('ul').on("click", 'button[name="ajouterTache"]', function(){
     };
 
     $.ajax({
-      url:'http://127.0.0.1:8000/api/tasks/'+user_id, 
+      url:'http://test1.developpeurfbs.com/api/tasks/'+user_id, 
       type : 'POST',
       data: JSON.stringify(Task),
       dataType: 'json',
