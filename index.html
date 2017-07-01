@@ -7,7 +7,8 @@
     </head>
 
     <body>
-    <a href="creationUser.html"><button>Créer un Utilisateur</button></a> 
+    <a href="creationUser.html"><button>Créer un Utilisateur</button></a>
+   
   
     <ul id="listUser">
       
@@ -28,7 +29,7 @@
               $.each(data,function(i,user){
                 var idUser= String(user.id);
                 //console.log(user);
-                var liUser = '<li id='+idUser+' name='+user.name+' value=> name : '+user.name +' email: '+user.email+'<a> <button id='+idUser+' name="supprimerUtilisateur">Supprimer cet utilisateur</button></a> <a> <button id='+idUser+' name="ajouterTache">Ajouter une tache</button></a><a> <button id='+idUser+' name="listerTache"> Lister les taches</button></a></li>';
+                var liUser = '<li id='+idUser+' name='+user.name+' value=> name : '+user.name +' email: '+user.email+'<a> <button id='+idUser+' name="supprimerUtilisateur">Supprimer cet utilisateur</button></a> <a> <button id='+idUser+' name="ajouterTache">Ajouter une tache</button></a></li><a><button id='+idUser+' name="listerTache"> Lister les taches</button></a>';
                 
                 $('#listUser').append(liUser);    
 
@@ -60,8 +61,12 @@
 
        });
 //////////////////////////liste tout les tache pour un utilisateur/////////////////////////
-       $('ul').one("click", 'button[name="listerTache"]', function(e){
-           
+       $('ul').on("click", 'button[name="listerTache"]', function(e){
+
+           $(this).attr("disabled","disabled");
+           var fermerListe = ' <a><button id='+this.id+' name="fermerTache"> Fermer la liste</button></a>'
+           $(this).after(fermerListe);
+                  
                   $.ajax({
                         url:'http://127.0.0.1:8000/lists/tasks/'+this.id, 
                         type : 'GET',
@@ -74,7 +79,7 @@
 
                   
               
-                         var liTask = '<li id='+idTask+'> title : '+task.title +' description: '+task.description+' Date de création : '+task.creation_date+' status : '+task.status+'<a> <button id='+idTask+' name="supprimerTache">Supprimer cet tache</button></a></li>';
+                         var liTask = '<li id='+idTask+' value='+task.user_id.id+'> title : '+task.title +' description: '+task.description+' Date de création : '+task.creation_date+' status : '+task.status+'<a> <button id='+idTask+' name="supprimerTache">Supprimer cet tache</button></a></li>';
 
                       
                     $('[name$='+nameUser+']').append(liTask); 
@@ -85,6 +90,14 @@
                         error: function(){
                           alert('La requête n\'a pas abouti');
                         }
+                  });
+
+                  $('ul').on("click", 'button[name="fermerTache"][id="'+this.id+'"]', function(e){
+
+                      $('button[name="listerTache"][id="'+this.id+'"]').removeAttr("disabled");
+                      $(this).remove();
+                      $('li[value="'+this.id+'"]').remove()
+
                   });
 
             
@@ -114,7 +127,7 @@ $('ul').one("click", 'button[name="ajouterTache"]', function(){
       
         $(this).after(formulaire);
         var user_id = this.id;
-        
+
         $('#formulaireTache').on('submit', function(e){
           var url = "index.html";
           e.preventDefault();
