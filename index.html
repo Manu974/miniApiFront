@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="views/css/homeStyle.css" />
-        <title>Mini Api</title>
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="views/css/homeStyle.css" />
+    <title>Mini Api</title>
+  </head>
 
-    <body>
+  <body>
     <a href="views/creationUser.html"><button>Créer un Utilisateur</button></a>
-   
-  
+
     <ul id="listUser">
-      
+
     </ul>
 
-
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-     <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script>
       $(function() {
 
         $(window).on('load', function(){
@@ -26,36 +24,31 @@
             type : 'GET',
             timeout : 3000,
             success: function(data){
-              
+
               $.each(data,function(i,user){
+
                 var idUser= String(user.id);
-                //console.log(user);
-                var liUser = '<li id='+idUser+' name='+user.name+' value=> name : '+user.name +' email: '+user.email+'<a> <button id='+idUser+' name="supprimerUtilisateur">Supprimer cet utilisateur</button></a> <a> <button id='+idUser+' name="ajouterTache">Ajouter une tache</button></a></li><a><button id='+idUser+' name="listerTache"> Lister les taches</button></a>';
                 
+                var liUser = '<li id='+idUser+' name='+user.name+' value=> name : '+user.name +' email: '+user.email+'<a> <button id='+idUser+' name="supprimerUtilisateur">Supprimer cet utilisateur</button></a> <a> <button id='+idUser+' name="ajouterTache">Ajouter une tache</button></a></li><a><button id='+idUser+' name="listerTache"> Lister les taches</button></a>';
+
                 $('#listUser').append(liUser);    
 
-            });
-              
+              });
+
             },
             error: function(){
               alert('La requête n\'a pas abouti');
             }
           });   
-
-
         });
+      });
 
+    </script>
 
-        
-    });
-      </script>
+    <script type="text/javascript" src="js/ajouterTache.js"></script>
+    <script type="text/javascript" src="js/listeTache.js"></script>
+    <script type="text/javascript" src="js/supprimerUtilisateur.js"></script>
+    <script type="text/javascript" src="js/supprimerTache.js"></script>
 
-     <script type="text/javascript" src="js/ajouterTache.js"></script>
-     <script type="text/javascript" src="js/listeTache.js"></script>
-     <script type="text/javascript" src="js/supprimerUtilisateur.js"></script>
-     <script type="text/javascript" src="js/supprimerTache.js"></script>
-
-    </body>
-
-
+  </body>
 </html>

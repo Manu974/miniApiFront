@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="views/css/creationUtilisateurStyle.css" />
-        <title>Mini Api</title>
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="views/css/creationUtilisateurStyle.css" />
+    <title>Mini Api</title>
+  </head>
 
-    <body>
+  <body>
+
     <form id="creationUtilisateur" method="POST">
-  	<label for="Username">Username</label> <input type="text" name="Username" id="Username"><br />
-  	<label for="Email">Email</label> <input type="email" name="email" id="email" /><br />
-  	<input type="submit" value="S'inscrire" />
-	</form> 
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-      <script>
+      <label for="Username">Username</label> <input type="text" name="Username" id="Username"><br />
+      <label for="Email">Email</label> <input type="email" name="email" id="email" /><br />
+      <input type="submit" value="S'inscrire" />
+    </form> 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script>
       $(function() {
 
         $('#creationUtilisateur').on('submit', function(e){
-          var url = "index.html";
+
+          var url = "../index.html";
           e.preventDefault();
-        
+
           var username = $('#Username').val();
           var mail = $('#email').val();
 
           var User = {
-            "name" : username,
-            "email": mail
+          "name" : username,
+          "email": mail
           };
-
-          console.log(User);
 
           $.ajax({
             url:'http://127.0.0.1:8000/users', 
@@ -37,18 +38,14 @@
             dataType: 'json',
             contentType: 'application/json',
             success: function(data){
-              
               window.location.href= url;
             },
             error: function(){
-              alert(" have a problem");
+              alert("have a problem");
             }
           });
-
-
         });
-        
       });
-      </script>
-    </body>
+    </script>
+  </body>
 </html>
