@@ -121,14 +121,18 @@ $('ul').on("click", 'button[name="supprimerTache"]', function(){
 
 
        ///////////////////ajouter une tache////////////////
-$('ul').one("click", 'button[name="ajouterTache"]', function(){
+$('ul').on("click", 'button[name="ajouterTache"]', function(){
+    
+        $(this).attr("disabled","disabled");
 
-        var formulaire = '<div id="conteneur"><form id="formulaireTache" method="POST"><label for="title">Titre </label><input type="text" id="title" name="title"><br /><label for="description">Description </label><input type="text" id="description" name="description"></input><br /><label for="status">Status </label><input type="text" id="status" name="status"><br /><button type="submit" id="save">envoyer</button></form></div>';
+        var formulaire = '<div id="conteneur"><form id="formulaireTache" value="'+this.id+'" method="POST"><label for="title">Titre </label><input type="text" id="title" name="title"><br /><label for="description">Description </label><input type="text" id="description" name="description"></input><br /><label for="status">Status </label><input type="text" id="status" name="status"><br /><button type="submit" id="save">envoyer</button> <button type="button" id='+this.id+' name="annulerTache">Annuler</button></a></form><a> </div>';
+
+
       
         $(this).after(formulaire);
         var user_id = this.id;
 
-        $('#formulaireTache').on('submit', function(e){
+        $('#formulaireTache[value="'+this.id+'"]').on('submit', function(e){
           var url = "index.html";
           e.preventDefault();
         
@@ -160,6 +164,11 @@ $('ul').one("click", 'button[name="ajouterTache"]', function(){
           });
 
 
+        });
+
+        $('ul').on("click",'button[name="annulerTache"][id="'+this.id+'"]', function(){
+          $('button[name="ajouterTache"][id = "'+this.id+'"]').removeAttr("disabled");
+          $('#formulaireTache[value="'+this.id+'"]').remove();
         });
 
     });
